@@ -53,9 +53,10 @@
   };
 
   class Product{
-    constructor(){
-      const thisProduct = this;
-
+    constructor(id, data){
+      const thisProduct = this; // this is an object that represents instance
+      thisProduct.id = id;
+      thisProduct.data = data;
       console.log('new Product:', thisProduct);
     }
   }
