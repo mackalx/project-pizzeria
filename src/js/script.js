@@ -61,6 +61,8 @@
 
       thisProduct.renderInMenu();
 
+      thisProduct.initAccordion();
+
       console.log('new Product:', thisProduct);
     }
 
@@ -79,7 +81,36 @@
       /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
+
+    initAccordion(){
+      const thisProduct = this;
+      
+      /* [DONE] find the clickable trigger (the element that should react to clicking) */
+      thisProduct.trigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      /* [DONE] START: click event listener to trigger */
+      thisProduct.trigger.addEventListener('click', function(event){
+        /* [DONE] prevent default action for event */
+        event.preventDefault(); // what does it really do? CHECK
+        /* [DONE] toggle active class on element of thisProduct */
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+        /* [DONE] find all active products */
+        const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
+        /* [DONE] START LOOP: for each active product */
+        for (let activeProduct of activeProducts){
+          /* [DONE] START: if the active product isn't the element of thisProduct */
+          if (activeProduct != thisProduct.element){
+            /* [DONE] remove class active for the active product */
+            activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+          /* [DONE] END: if the active product isn't the element of thisProduct */
+          }
+        /* [DONE] END LOOP: for each active product */
+        }
+      /* [DONE] END: click event listener to trigger */
+      }); // REMEMBER THIS!!!
+    }
   }
+
+
 
   const app = {
     initMenu: function(){
