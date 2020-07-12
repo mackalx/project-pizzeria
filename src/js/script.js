@@ -148,10 +148,8 @@
       const thisProduct = this;
       /* [DONE] read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
       /* [DONE] set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
-      console.log('price', price);
       /* [DONE] START LOOP: for each paramId in thisProduct.data.params */
       for (let paramId in thisProduct.data.params) {
         /* [DONE] save the element in thisProduct.data.params with key paramId as const param */
@@ -164,12 +162,12 @@
           /* [DONE] START IF: if option is selected and option is not default */
           if (optionSelected && !option.default){
             /* [DONE] add price of option to variable price */
-            price = price + option.price;
+            price += option.price;
           /* [DONE] END IF: if option is selected and option is not default */
           /* [DONE] START ELSE IF: if option is not selected and option is default */
           } else if (!optionSelected && option.default){
             /* [DONE] deduct price of option from price */
-            price = price - option.price;
+            price -= option.price;
           /* [DONE] END ELSE IF: if option is not selected and option is default */
           }
         /* [DONE] END LOOP: for each optionId in param.options */
