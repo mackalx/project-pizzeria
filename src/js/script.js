@@ -61,7 +61,13 @@
 
       thisProduct.renderInMenu();
 
+      thisProduct.getElements();
+
       thisProduct.initAccordion();
+
+      thisProduct.initOrderForm();
+
+      thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
     }
@@ -82,23 +88,31 @@
       menuContainer.appendChild(thisProduct.element);
     }
 
+    getElements(){
+      const thisProduct = this;
+    
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
+
     initAccordion(){
       const thisProduct = this;
       
-      /* [DONE] find the clickable trigger (the element that should react to clicking) */
-      thisProduct.trigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      /* [DONE] START: click event listener to trigger */
-      thisProduct.trigger.addEventListener('click', function(event){
+      /* [DONE] START: click event listener to found with selector clickable trigger */
+      thisProduct.accordionTrigger.addEventListener('click', function(event){
         /* [DONE] prevent default action for event */
         event.preventDefault(); // what does it really do? CHECK
-        /* [DONE] toggle active class on element of thisProduct */
+        /* [DONE] toggle active class on element of thisProduct */ // CHECK
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
         /* [DONE] find all active products */
         const activeProducts = document.querySelectorAll(select.all.menuProductsActive);
         /* [DONE] START LOOP: for each active product */
         for (let activeProduct of activeProducts){
           /* [DONE] START: if the active product isn't the element of thisProduct */
-          if (activeProduct != thisProduct.element){
+          if (activeProduct !== thisProduct.element){ // remember to use === : ('' == 0) is true because string converts to integer this way, ('' === 0) is false
             /* [DONE] remove class active for the active product */
             activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
           /* [DONE] END: if the active product isn't the element of thisProduct */
@@ -108,8 +122,64 @@
       /* [DONE] END: click event listener to trigger */
       }); // REMEMBER THIS!!!
     }
-  }
 
+    initOrderForm(){
+      const thisProduct = this;
+      console.log('initOrderForm', this.initOrderForm);
+
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault(); // block sending form with page reload
+        thisProduct.processOrder();
+      });
+      
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+      
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault(); // block change of page address after clicking the link (this button is in this case just a link)
+        thisProduct.processOrder();
+      });
+    }
+
+    processOrder(){
+      const thisProduct = this;
+      /* [DONE] read all data from the form (using utils.serializeFormToObject) and save it to const formData */
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
+      /* [DONE] set variable price to equal thisProduct.data.price */
+      let price = thisProduct.data.price;
+      console.log('price', price);
+      /* [DONE] START LOOP: for each paramId in thisProduct.data.params */
+      for (let paramId in thisProduct.data.params) {
+        /* [DONE] save the element in thisProduct.data.params with key paramId as const param */
+        const param = thisProduct.data.params[paramId];
+        /* [DONE] START LOOP: for each optionId in param.options */
+        for (let optionId in param.options){
+          /* [DONE] save the element in param.options with key optionId as const option */
+          const option = param.options[optionId];
+          const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
+          /* [DONE] START IF: if option is selected and option is not default */
+          if (optionSelected && !option.default){
+            /* [DONE] add price of option to variable price */
+            price = price + option.price;
+          /* [DONE] END IF: if option is selected and option is not default */
+          /* [DONE] START ELSE IF: if option is not selected and option is default */
+          } else if (!optionSelected && option.default){
+            /* [DONE] deduct price of option from price */
+            price = price - option.price;
+          /* [DONE] END ELSE IF: if option is not selected and option is default */
+          }
+        /* [DONE] END LOOP: for each optionId in param.options */
+        }
+      /* [DONE] END LOOP: for each paramId in thisProduct.data.params */
+      }
+      /* [DONE] set the contents of thisProduct.priceElem to be the value of variable price */
+      thisProduct.priceElem.innerHTML = price;
+    }
+  }
 
 
   const app = {
