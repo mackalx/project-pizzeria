@@ -215,6 +215,8 @@
 
       thisWidget.getElements(element);
 
+      thisWidget.value = settings.amountWidget.defaultValue; // this is here in case value in HTML is not given
+
       thisWidget.setValue(thisWidget.input.value);
 
       thisWidget.initActions(); // now works, do not forget to call instances
@@ -237,10 +239,13 @@
   
       const newValue = parseInt(value);
   
-      /* Add validation */
-  
-      thisWidget.value = newValue;
-      thisWidget.announce();
+      /* [DONE] Add validation */
+      if (newValue != thisWidget.value 
+        && newValue >= settings.amountWidget.defaultMin 
+        && newValue <= settings.amountWidget.defaultMax){
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
       thisWidget.input.value = thisWidget.value;
     }
 
