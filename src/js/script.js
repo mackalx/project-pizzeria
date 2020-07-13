@@ -67,6 +67,8 @@
 
       thisProduct.initOrderForm();
 
+      thisProduct.initAmountWidget();
+
       thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
@@ -97,7 +99,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget); // FINISHED HERE!!!!!!!!!!!
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion(){
@@ -171,7 +173,7 @@
             price -= option.price;
           /* [DONE] END ELSE IF: if option is not selected and option is default */
           }
-          /* [DONE] find all elements in thisProduct.imageWrapper with dot, paramID key, dash and optionID key and save it to const */
+          /* [DONE] get images by selecting on imagewrapper dynamic selector made of param and option ids */
           const productImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
           /* [DONE] START IF: if option is selected */
           if (optionSelected){
@@ -180,7 +182,7 @@
               /* [DONE] add class active to image */
               productImage.classList.add(classNames.menuProduct.imageVisible);
             }
-          } else { // in other case
+          } else { // !!!TRY TO CHANGE IT TO IF NEGATION
             /* [DONE] START LOOP: for each image in all images */
             for (let productImage of productImages){
               /* [DONE] remove class active from image */
@@ -194,16 +196,66 @@
       /* [DONE] set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = price;
     }
+
+    initAmountWidget(){
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
+    }
   }
 
   class amountWidget{
     constructor(element){
       const thisWidget = this;
 
+      thisWidget.getElements(element);
+
+      thisWidget.setValue(thisWidget.input.value);
+
+      thisWidget.initActions(); // now works, do not forget to call instances
+
       console.log('AmountWidget:', thisWidget);
       console.log('constructor arguments:', element);
     }
+
+    getElements(element){
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value){ // CLASS? 8.7.4
+      const thisWidget = this;
+  
+      const newValue = parseInt(value);
+  
+      /* Add validation */
+  
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+    }
+
+    initActions(){
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function(){
+        thisWidget.setValue(thisWidget.input.value); // same argument as in constructor!
+      });
+      thisWidget.linkDecrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value - 1); // can't modify thisWidget.value so no --
+      });
+      thisWidget.linkIncrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value + 1); // can't modify thisWidget.value so no ++
+      });
+    }
   }
+
+  
 
   const app = {
     initMenu: function(){
