@@ -201,6 +201,9 @@
       const thisProduct = this;
 
       thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidgetElem.addEventListener('updated', function(){
+        thisProduct.processOrder();
+      });
     }
   }
 
@@ -235,6 +238,7 @@
       /* Add validation */
   
       thisWidget.value = newValue;
+      thisWidget.announce();
       thisWidget.input.value = thisWidget.value;
     }
 
@@ -252,6 +256,13 @@
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1); // can't modify thisWidget.value so no ++
       });
+    }
+
+    announce(){
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
     }
   }
 
