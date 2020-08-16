@@ -178,6 +178,7 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault(); // block change of page address after clicking the link (this button is in this case just a link)
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -240,6 +241,12 @@
       thisProduct.amountWidgetElem.addEventListener('updated', function(){
         thisProduct.processOrder();
       });
+    }
+
+    addToCart(){ // it passes the entire instance as an argument to the app.cart.add method (we saved an instance of the Cart class in app.cart) 
+      const thisProduct = this;
+
+      app.cart.add(thisProduct);
     }
   }
 
@@ -333,6 +340,12 @@
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive); // handler of the listener that toggless class stored in classNames.cart.wrapperActive on thisCart.dom.wrapper element
       });
+    }
+
+    add(menuProduct){
+      // const thisCart = this;
+
+      console.log('adding product', menuProduct);
     }
   }
 
