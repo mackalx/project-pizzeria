@@ -268,7 +268,7 @@
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
 
-    setValue(value){ // CLASS? 8.7.4
+    setValue(value){
       const thisWidget = this;
   
       const newValue = parseInt(value);
@@ -307,7 +307,25 @@
     }
   }
 
-  
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+
+      thisCart.products = []; // array that will contain every product added to cart
+
+      thisCart.getElements(element);
+
+      console.log('new Cart', thisCart);
+    }
+
+    getElements(element){
+      const thisCart = this;
+
+      thisCart.dom = {}; // object that will contain every DOM element found in the cart component (instead f.e. thisCart.amountElem we'll use thisCart.dom.amount)
+
+      thisCart.dom.wrapper = element;
+    }
+  }
 
   const app = {
     initMenu: function(){
@@ -326,6 +344,13 @@
       thisApp.data = dataSource;
     },
 
+    initCart: function(){ // method initiating cart instance - we give it the cart's wrapper
+      const thisApp = this;
+
+      const cartElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart(cartElem); // Cart class instance in thisApp.cart (we can call it outside app with app.cart)
+    },
+
     init: function(){
       const thisApp = this;
       // console.log('*** App starting ***');
@@ -336,6 +361,7 @@
 
       thisApp.initData();
       thisApp.initMenu();
+      thisApp.initCart();
     },
   };
 
