@@ -256,6 +256,9 @@
     addToCart(){ // it passes the entire instance as an argument to the app.cart.add method (we saved an instance of the Cart class in app.cart) 
       const thisProduct = this;
 
+      thisProduct.name = thisProduct.data.name;
+      thisProduct.amount = thisProduct.amountWidget.value;
+
       app.cart.add(thisProduct);
     }
   }
