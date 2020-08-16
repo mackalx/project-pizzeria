@@ -312,9 +312,8 @@
       const thisCart = this;
 
       thisCart.products = []; // array that will contain every product added to cart
-
       thisCart.getElements(element);
-
+      thisCart.initActions();
       console.log('new Cart', thisCart);
     }
 
@@ -322,8 +321,18 @@
       const thisCart = this;
 
       thisCart.dom = {}; // object that will contain every DOM element found in the cart component (instead f.e. thisCart.amountElem we'll use thisCart.dom.amount)
-
       thisCart.dom.wrapper = element;
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+    }
+
+    initActions(){
+      const thisCart = this;
+
+      thisCart.dom.toggleTrigger.addEventListener('click', function (event){
+        event.preventDefault();
+
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive); // handler of the listener that toggless class stored in classNames.cart.wrapperActive on thisCart.dom.wrapper element
+      });
     }
   }
 
