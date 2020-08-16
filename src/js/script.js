@@ -343,6 +343,7 @@
       thisCart.dom = {}; // object that will contain every DOM element found in the cart component (instead f.e. thisCart.amountElem we'll use thisCart.dom.amount)
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = document.querySelector(select.cart.productList);
     }
 
     initActions(){
@@ -356,7 +357,12 @@
     }
 
     add(menuProduct){
-      // const thisCart = this;
+      const thisCart = this;
+
+      const generatedHTML = templates.cartProduct(menuProduct); // create HTML code using the appropriate template and store it in generatedHTML const
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML); // then convert this code into DOM elements and store it in generatedDOM const
+      const cartContainer = thisCart.dom.productList; // add these DOM elements to thisCart.dom.productList
+      cartContainer.appendChild(generatedDOM);
 
       console.log('adding product', menuProduct);
     }
