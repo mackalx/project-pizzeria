@@ -365,6 +365,9 @@
       cartContainer.appendChild(generatedDOM);
 
       console.log('adding product', menuProduct);
+
+      thisCart.products.push(menuProduct); // checking to solve the problem: product passed as an argument to the Cart.add method was only a reference to the product instance in the cart - since this product was later changed in the menu, the cart only has access to this changed instance
+      console.log('thisCart.products', thisCart.products);
     }
   }
 
