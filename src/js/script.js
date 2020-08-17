@@ -366,10 +366,41 @@
 
       console.log('adding product', menuProduct);
 
-      thisCart.products.push(menuProduct); // checking to solve the problem: product passed as an argument to the Cart.add method was only a reference to the product instance in the cart - since this product was later changed in the menu, the cart only has access to this changed instance
+      thisCart.products.push (new CartProduct(menuProduct, generatedDOM)); // this way we will simultaneously create a new instance of the new CartProduct class and add it to the thisCart.products array
       console.log('thisCart.products', thisCart.products);
     }
   }
+
+  class CartProduct{
+    constructor(menuProduct, element){
+      const thisCartProduct = this;
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params)); // clone the object to use a copy of its current values
+
+      thisCartProduct.getElements(element);
+
+      console.log('new CartProduct', thisCartProduct);
+      console.log('productData', menuProduct);
+    }
+
+    getElements(element){
+      const thisCartProduct = this;
+  
+      thisCartProduct.dom = {};
+  
+      thisCartProduct.dom.wrapper = element;
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
+      thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
+      thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+    }
+  }
+
 
   const app = {
     initMenu: function(){
