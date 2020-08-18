@@ -359,18 +359,17 @@
     initActions(){
       const thisCart = this;
 
-      thisCart.dom.toggleTrigger.addEventListener('click', function (event){
+      thisCart.dom.toggleTrigger.addEventListener('click', function(event){
         event.preventDefault();
-
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive); // handler of the listener that toggless class stored in classNames.cart.wrapperActive on thisCart.dom.wrapper element
-      
-        thisCart.dom.productList.addEventListener('updated', function (){
-          thisCart.update();
-        });
+      });
 
-        thisCart.dom.productList.addEventListener('remove', function (){
-          thisCart.remove(event.detail.cartProduct);
-        });
+      thisCart.dom.productList.addEventListener('updated', function(){
+        thisCart.update();
+      });
+
+      thisCart.dom.productList.addEventListener('remove', function(){
+        thisCart.remove(event.detail.cartProduct);
       });
     }
 
@@ -489,11 +488,11 @@
     initActions(){
       const thisCartProduct = this;
 
-      thisCartProduct.dom.edit.addEventListener('click', function (event){
+      thisCartProduct.dom.edit.addEventListener('click', function(event){
         event.preventDefault();
       });
 
-      thisCartProduct.dom.remove.addEventListener('click', function (event){
+      thisCartProduct.dom.remove.addEventListener('click', function(event){
         event.preventDefault();
         thisCartProduct.remove();
       });
