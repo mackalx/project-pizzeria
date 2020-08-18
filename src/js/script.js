@@ -247,7 +247,7 @@
     initAmountWidget(){
       const thisProduct = this;
 
-      thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       thisProduct.amountWidgetElem.addEventListener('updated', function(){
         thisProduct.processOrder();
       });
@@ -263,7 +263,7 @@
     }
   }
 
-  class amountWidget{
+  class AmountWidget{
     constructor(element){
       const thisWidget = this;
 
@@ -383,6 +383,7 @@
       thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params)); // clone the object to use a copy of its current values
 
       thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
 
       console.log('new CartProduct', thisCartProduct);
       console.log('productData', menuProduct);
@@ -398,6 +399,17 @@
       thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+    }
+
+    initAmountWidget(){ // copied from Product.initAmountWidget and edited
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      });
     }
   }
 
