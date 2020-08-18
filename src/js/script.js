@@ -423,7 +423,7 @@
       const index = thisCart.products.indexOf(cartProduct);
 
       thisCart.products.splice(index);
-      cartProduct.dom.wrapper.remove();
+      event.detail.cartProduct.dom.wrapper.remove();
 
       thisCart.update();
     }
