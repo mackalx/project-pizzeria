@@ -345,6 +345,12 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = document.querySelector(select.cart.productList);
+
+      thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee']; // creating an array that contains four strings - each is a key in select.cart, we'll use this array to quickly create four properties of thisCart.dom object with the same keys, each of them will contain a collection of items found with the appropriate selector
+
+      for(let key of thisCart.renderTotalsKeys){
+        thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
+      }
     }
 
     initActions(){
@@ -391,6 +397,12 @@
       console.log('totalNumber', thisCart.totalNumber);
       console.log('subtotalPrice', thisCart.subtotalPrice);
       console.log('totalPrice', thisCart.totalPrice);
+
+      for (let key of thisCart.renderTotalsKeys){
+        for (let elem of thisCart.dom[key]){
+          elem.innerHTML = thisCart[key];
+        }
+      }
     }
   }
 
