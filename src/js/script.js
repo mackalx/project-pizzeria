@@ -322,7 +322,10 @@
     announce(){
       const thisWidget = this;
 
-      const event = new Event('updated');
+      const event = new CustomEvent('updated',{
+        bubbles: true // in cases of custom events we have to enable bubbles property manually - after being executed on an element, will be passed to its parent and parent's parent, and so on - up to <body>, document and window itself
+      });
+
       thisWidget.element.dispatchEvent(event);
     }
   }
@@ -360,6 +363,10 @@
         event.preventDefault();
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive); // handler of the listener that toggless class stored in classNames.cart.wrapperActive on thisCart.dom.wrapper element
+      
+        thisCart.dom.productList.addEventListener('updated', function (){
+          thisCart.update();
+        });
       });
     }
 
