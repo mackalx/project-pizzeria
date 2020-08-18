@@ -354,7 +354,9 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = document.querySelector(select.cart.productList);
       thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
-
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
+      
       thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee']; // creating an array that contains four strings - each is a key in select.cart, we'll use this array to quickly create four properties of thisCart.dom object with the same keys, each of them will contain a collection of items found with the appropriate selector
 
       for(let key of thisCart.renderTotalsKeys){
@@ -390,9 +392,19 @@
       const url = settings.db.url + '/' + settings.db.order;
 
       const payload = {
-        address: 'test',
+        products: [],
+
+        address: thisCart.dom.address,
+        phone: thisCart.dom.phone,
+        totalNumber: thisCart.totalNumber,
+        subtotalPrice: thisCart.subtotalPrice,
         totalPrice: thisCart.totalPrice,
+        deliveryFee: thisCart.deliveryFee,
       };
+
+      for(let thisCartProduct of thisCart.products) {
+        payload.products.push(thisCartProduct.getData());
+      }
 
       const options = {
         method: 'POST',
@@ -406,7 +418,7 @@
         .then(function(response){
           return response.json();
         }).then(function(parsedResponse){
-          console.log('parsedResponse:', parsedResponse);
+          // console.log('parsedResponse:', parsedResponse);
         });
     }
 
@@ -534,6 +546,18 @@
         thisCartProduct.remove();
       });
     }
+
+    getData(){
+      const thisCartProduct = this;
+
+      return {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        params: thisCartProduct.params,
+      };
+    }
   }
 
 
@@ -560,14 +584,14 @@
           return rawResponse.json(); // convert the received response from JSON to an array
         })
         .then(function(parsedResponse){
-          console.log('parsedResponse:', parsedResponse); // after receiving the converted parsedResponse response, we display it in the console
+          // console.log('parsedResponse:', parsedResponse); // after receiving the converted parsedResponse response, we display it in the console
           /* [DONE] save parsedResponse as thisApp.data.products */
           thisApp.data.products = parsedResponse;
           /* [DONE] execute initMenu method */
           thisApp.initMenu();
         });
 
-      console.log('thisApp.data:', JSON.stringify(thisApp.data));
+      // console.log('thisApp.data:', JSON.stringify(thisApp.data));
     },
 
     initCart: function(){ // method initiating cart instance - we give it the cart's wrapper
