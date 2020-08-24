@@ -1,3 +1,7 @@
+import {templates, classNames, select, settings} from '../settings.js';
+import CartProduct from '../components/CartProduct.js';
+import utils from '../utils.js';
+
 class Cart{
   constructor(element){
     const thisCart = this;
@@ -6,7 +10,6 @@ class Cart{
     thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
     thisCart.getElements(element);
     thisCart.initActions();
-    // console.log('new Cart', thisCart);
   }
 
   getElements(element){
@@ -93,10 +96,7 @@ class Cart{
     const cartContainer = thisCart.dom.productList; // add these DOM elements to thisCart.dom.productList
     cartContainer.appendChild(generatedDOM);
 
-    // console.log('adding product', menuProduct);
-
     thisCart.products.push (new CartProduct(menuProduct, generatedDOM)); // this way we will simultaneously create a new instance of the new CartProduct class and add it to the thisCart.products array
-    // console.log('thisCart.products', thisCart.products);
 
     thisCart.update();
   }
@@ -116,10 +116,6 @@ class Cart{
     } else {
       thisCart.totalPrice = 0;
     }
-
-    // console.log('totalNumber', thisCart.totalNumber);
-    // console.log('subtotalPrice', thisCart.subtotalPrice);
-    // console.log('totalPrice', thisCart.totalPrice);
 
     for (let key of thisCart.renderTotalsKeys){
       for (let elem of thisCart.dom[key]){

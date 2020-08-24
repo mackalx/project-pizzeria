@@ -6,8 +6,6 @@ const app = {
   initMenu: function(){
     const thisApp = this;
 
-    // console.log('thisApp.data:', thisApp.data);
-
     for(let productData in thisApp.data.products){
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]); // the only place where we used product key was here - now instead of a key, we use id
     }
@@ -31,8 +29,6 @@ const app = {
         /* [DONE] execute initMenu method */
         thisApp.initMenu();
       });
-
-    // console.log('thisApp.data:', JSON.stringify(thisApp.data));
   },
 
   initCart: function(){ // method initiating cart instance - we give it the cart's wrapper
@@ -50,11 +46,6 @@ const app = {
 
   init: function(){
     const thisApp = this;
-    // console.log('*** App starting ***');
-    // console.log('thisApp:', thisApp);
-    // console.log('classNames:', classNames);
-    // console.log('settings:', settings);
-    // console.log('templates:', templates);
 
     thisApp.initData();
     thisApp.initCart();
@@ -62,4 +53,3 @@ const app = {
 };
 
 app.init();
-

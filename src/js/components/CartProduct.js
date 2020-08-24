@@ -1,3 +1,6 @@
+import {select} from '../settings.js';
+import AmountWidget from '../components/AmountWidget.js';
+
 class CartProduct{
   constructor(menuProduct, element){
     const thisCartProduct = this;
@@ -12,9 +15,6 @@ class CartProduct{
     thisCartProduct.getElements(element);
     thisCartProduct.initAmountWidget();
     thisCartProduct.initActions();
-
-    // console.log('new CartProduct', thisCartProduct);
-    // console.log('productData', menuProduct);
   }
 
   getElements(element){
@@ -51,8 +51,6 @@ class CartProduct{
     });
 
     thisCartProduct.dom.wrapper.dispatchEvent(event);
-
-    // console.log('remove', event);
   }
 
   initActions(){
@@ -80,3 +78,5 @@ class CartProduct{
     };
   }
 }
+
+export default CartProduct;

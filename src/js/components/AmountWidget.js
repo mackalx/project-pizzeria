@@ -1,3 +1,5 @@
+import {select, settings} from '../settings.js';
+
 class AmountWidget{
   constructor(element){
     const thisWidget = this;
@@ -9,9 +11,6 @@ class AmountWidget{
     thisWidget.setValue(thisWidget.input.value);
 
     thisWidget.initActions(); // now works, do not forget to call instances
-
-    // console.log('AmountWidget:', thisWidget);
-    // console.log('constructor arguments:', element);
   }
 
   getElements(element){
@@ -64,3 +63,5 @@ class AmountWidget{
     thisWidget.element.dispatchEvent(event);
   }
 }
+
+export default AmountWidget;

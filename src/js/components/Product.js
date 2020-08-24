@@ -1,6 +1,6 @@
-import {select, classNames, templates} from './settings.js';
-import utils from './utils.js';
-import AmountWidget from './components/AmountWidget.js';
+import {select, classNames, templates} from '../settings.js';
+import utils from '../utils.js';
+import AmountWidget from './AmountWidget.js';
 
 class Product{
   constructor(id, data){
@@ -20,8 +20,6 @@ class Product{
     thisProduct.initAmountWidget();
 
     thisProduct.processOrder();
-
-    // console.log('new Product:', thisProduct);
   }
 
   renderInMenu(){
@@ -157,7 +155,6 @@ class Product{
     thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
     /* [DONE] set the contents of thisProduct.priceElem to be the value of variable price */
     thisProduct.priceElem.innerHTML = thisProduct.price;
-    // console.log('thisProduct.params is:', thisProduct.params);
   }
 
   initAmountWidget(){
@@ -174,8 +171,6 @@ class Product{
 
     thisProduct.name = thisProduct.data.name;
     thisProduct.amount = thisProduct.amountWidget.value;
-
-    // app.cart.add(thisProduct);
 
     const event = new CustomEvent('add-to-cart', {
       bubbles: true,
