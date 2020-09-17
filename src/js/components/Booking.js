@@ -12,7 +12,6 @@ class Booking{
     thisBooking.initWidgets();
     thisBooking.getData();
     thisBooking.selectTable();
-    thisBooking.sendBooking();
   }
 
   getData(){
@@ -171,11 +170,15 @@ class Booking{
     const url = settings.db.url + '/' + settings.db.booking;
 
     const payload = {
+      starters: [],
+
       date: thisBooking.datePicker.value,
       hour: thisBooking.hourPicker.value,
       table: thisBooking.selectedTable,
       duration: thisBooking.hoursAmount.value,
       ppl: thisBooking.peopleAmount.value,
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
     };
 
     const options = {
@@ -197,12 +200,14 @@ class Booking{
 
   render(wrapper){
     const thisBooking = this;
-    const generatedHTML = templates.bookingWidget();
+    const generatedHTML = templates.bookingWidget(); // generate HTM based on template
 
     thisBooking.dom = {};
     
     thisBooking.dom.wrapper = wrapper;
-    thisBooking.dom.wrapper.innerHTML = generatedHTML;
+    
+    const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+    thisBooking.dom.wrapper.appendChild(generatedDOM);
 
     thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
@@ -211,6 +216,10 @@ class Booking{
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
 
     thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
+    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
   }
 
   initWidgets(){
@@ -224,6 +233,11 @@ class Booking{
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
+    });
+
+    thisBooking.dom.form.addEventListener('submit', function(event){
+      event.preventDefault();
+      thisBooking.sendBooking();
     });
   }
 }
