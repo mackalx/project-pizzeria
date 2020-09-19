@@ -181,6 +181,12 @@ class Booking{
       address: thisBooking.dom.address.value,
     };
 
+    for(let thisBookingStarter of thisBooking.dom.starters) {
+      if(thisBookingStarter.checked === true){
+        payload.starters.push(thisBookingStarter.value);
+      }
+    }
+
     const options = {
       method: 'POST',
       headers: {
