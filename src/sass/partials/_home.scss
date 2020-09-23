@@ -1,0 +1,174 @@
+/* Global */
+
+.main-nav {
+  .order, .booking {
+    display: none;
+  }
+}
+
+.home-wrapper {
+  margin: 42px auto;
+  padding: 72px 48px;
+  background: $color-light;
+  border-bottom: 1px solid $color-light;
+  border-radius: $radius;
+  font-family: $font-header;
+}
+  
+/* Home menu */
+  
+.home-menu {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  color: $color-light;
+
+  .home-order {
+    background-image: url('../../images/assets/wine.jpg');
+    margin-right: 10px;
+  }
+
+  .home-booking {
+    background-image: url('../../images/assets/people.jpg');
+  }
+
+  .home-box {
+    position: relative;
+    width: 100%;
+    height: 125px;
+    text-align: center;
+    background-position: center;
+    background-size: cover;
+    border-radius: $radius;
+    cursor: pointer;
+
+    .info-box {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 11%;
+      transition: $transition;
+
+      &:hover {
+        top: -15%;
+
+        h4 {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+  
+/* Hours */
+  
+.hours {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 125px;
+  width: 49%;
+  text-align: center;
+  border-radius: $radius;
+  background-color: $color-main;
+  color: $color-light;
+  margin: 10px 0 60px;
+  margin-left: 26em;
+
+  h4 {
+    margin: 0;
+  }
+
+  p {
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}
+  
+/* Slider */
+  
+.slider-container {
+  text-align: center;
+  margin: 20px 0 20px 0;
+}
+  
+.slider-image {
+  object-fit: cover;
+  height: 190px;
+  width: 190px;
+}
+  
+/* Gallery */
+  
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 50%;
+  margin: 40px auto;
+
+  .gallery-image {
+    flex-basis: 31.5%;
+    position: relative;
+    height: 180px;
+    margin: 5px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &::before {
+      position: absolute;
+      display: none;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $color-dark;
+      opacity: 0.4;
+    }
+
+    &:hover::before {
+      display: block;
+    }
+
+    &:hover .icons {
+      display: block;
+    }
+  }
+
+  .icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    font-size: 25px;
+
+    a {
+      color: $color-light;
+      margin: 4px;
+
+      &:hover .fa-heart {
+        color: $color-danger;
+      }
+    }
+  }
+}
+  
+/* Footer */
+  
+.footer {
+  font-family: $font-text;
+  margin-top: -20px;
+  text-align: left;
+  padding-left: 26em;
+
+  .footer-link {
+    color: $color-main;
+  }
+}

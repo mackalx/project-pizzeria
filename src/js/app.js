@@ -109,6 +109,54 @@ const app = {
     thisApp.booking = new Booking(thisApp.booking);
   },
 
+  initSlider() {
+    const thisApp = this;
+
+    thisApp.sliderContent = [];
+
+    thisApp.sliderContent[0] = {
+      title: 'Amazing service!', text: 'Excepteur sint occaecat cupidatat non proident.', author: '~ Margaret Osborne',
+    };
+    thisApp.sliderContent[1] = {
+      title: 'Great service!', text: 'Excepteur sint occaecat cupidatat non proident', author: '~ Your mum',
+    };
+    thisApp.sliderContent[2] = {
+      title: 'Fine food!', text: 'Excepteur sint occaecat cupidatat non proident', author: '~ Gordon Ramsay',
+    };
+
+    let n = 0;
+    
+    thisApp.sliderDots = document.querySelectorAll('.slider-dots i');
+    
+    function changeSlide() {
+      const title = document.querySelector('.slider-title');
+      const text = document.querySelector('.slider-text');
+      const name = document.querySelector('.slider-author');
+
+      for (let sliderDot of thisApp.sliderDots) {
+        if (sliderDot.id === 'slider-dot-'+ (n + 1)) {
+          sliderDot.classList.add('active');
+        } else {
+          sliderDot.classList.remove('active');
+        }
+        title.innerHTML = thisApp.sliderContent[n].title;
+        text.innerHTML = thisApp.sliderContent[n].text;
+        name.innerHTML = thisApp.sliderContent[n].author;
+      }
+
+      if (n < thisApp.sliderContent.length - 1) {
+        n++;
+      } else {
+        n = 0;
+      }
+    }
+    changeSlide();
+
+    setInterval(() => {
+      changeSlide();
+    }, 3000);
+  },
+
   init: function(){
     const thisApp = this;
 
@@ -116,6 +164,7 @@ const app = {
     thisApp.initCart();
     thisApp.initPages();
     thisApp.initBooking();
+    thisApp.initSlider();
   },
 };
 
