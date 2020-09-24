@@ -122,16 +122,16 @@ const app = {
     };
     thisApp.sliderContent[2] = {
       title: 'Fine food!', text: 'Excepteur sint occaecat cupidatat non proident', author: '~ Gordon Ramsay',
-    };
-
+    };  
+    
     let n = 0;
-    
-    thisApp.sliderDots = document.querySelectorAll('.slider-dots i');
-    
+
     function changeSlide() {
       const title = document.querySelector('.slider-title');
       const text = document.querySelector('.slider-text');
       const name = document.querySelector('.slider-author');
+      
+      thisApp.sliderDots = document.querySelectorAll('.slider-dots i');
 
       for (let sliderDot of thisApp.sliderDots) {
         if (sliderDot.id === 'slider-dot-'+ (n + 1)) {
@@ -152,7 +152,7 @@ const app = {
     }
     changeSlide();
 
-    setInterval(() => {
+    setInterval(function() { //slick-slider function
       changeSlide();
     }, 3000);
   },

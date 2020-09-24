@@ -206,7 +206,7 @@ class Booking{
 
   render(wrapper){
     const thisBooking = this;
-    const generatedHTML = templates.bookingWidget(); // generate HTM based on template
+    const generatedHTML = templates.bookingWidget(); // generate HTML based on template
 
     thisBooking.dom = {};
     
