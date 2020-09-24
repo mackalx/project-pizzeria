@@ -70,6 +70,8 @@ export const select = {
   },
   nav: {
     links: '.main-nav a',
+    order: '.home-order',
+    booking: '.home-booking',
   },
 };
 
